@@ -66,8 +66,8 @@ shape_data <- data %>%
   mutate(
     angle = case_when(
       shape_type == "circle" ~ seq(0, 2 * pi, length.out = n()),
-      shape_type == "triangle" ~ seq(0, 2 * pi, length.out = 3),
-      shape_type == "rectangle" ~ seq(0, 2 * pi, length.out = 5)[1:4],
+      shape_type == "triangle" ~ rep(seq(0, 2 * pi, length.out = 3), length.out = n()),
+      shape_type == "rectangle" ~ rep(seq(0, 2 * pi, length.out = 4), length.out = n()),
       shape_type == "curve" ~ seq(-pi/2, pi/2, length.out = n()),
       shape_type == "arc" ~ seq(-pi/4, pi/4, length.out = n()),
       TRUE ~ seq(0, 2 * pi, length.out = n())
@@ -91,7 +91,7 @@ p <- ggplot(shape_data, aes(x = x, y = y, group = interaction(shape_id, layer)))
   ) +
   coord_fixed() +
   scale_size_identity() +
-  facet_wrap(~layer, ncol = 1, scales = "free") +
+  facet_wrap(~layer, ncol = 1) +
   theme(strip.text = element_blank())
 
 # Add musical rhythm elements
